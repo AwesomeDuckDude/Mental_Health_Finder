@@ -1,19 +1,52 @@
 <!DOCTYPE html>
-<html lang = "en">
-  <head>
-    <font color="#881be4"><marquee><h1>Mental Health Resource Finder</h1></marquee></font>
-  </head>
-    <body bgcolor = "#d52a6e"> 
-    <center>
-      <h1>Mental Health Resource Finder</h1>
-    </center>
-    <br>
-    <p>
-      <b>Sub test #1</b>
-      <br>
-    </p>
-    <p>
-      <b>Sub test #2</b>
-    </p>
-  </body>
+<html lang="en">
+  <link rel="stylesheet" href="style.css" /> 
+  <script src="script.js"></script>
+
+  <button class="tablink" onclick="openPage('Home', this, '#1D7DDE')" id="defaultOpen">Home</button>
+  <button class="tablink" onclick="openPage('Chat', this, '#1D7DDE')">Ai Chat</button>
+  <button class="tablink" onclick="openPage('Forum', this, '#1D7DDE')">Anonymous Forum</button>
+  <button class="tablink" onclick="openPage('Stress', this, '#1D7DDE')">Stress Activites</button>
+
+
+
+<div id="Home" class="tabcontent">
+  <body>
+  <body bgcolor="black">
+  <br><br><h1>Welcome to the Mental Health Finder</h1>
+  <button style="background-color:#1462B3; color:white;" onclick="sayHello()">Bana Ban</button>
+</body>
+</div>
+
+
+
+<div id="Chat" class="tabcontent">
+  <h3>Ai Chat</h3>
+  <p>Freely talk to an ai</p>
+</div>
+
+
+
+<div id="Forum" class="tabcontent">
+  <h3>Anonymous Forum</h3>
+  <p>Get in touch, you matter.</p>
+</div>
+
+
+
+<div id="Stress" class="tabcontent">
+  <h3>Stress Activities</h3>
+  <p>Find activities to help manage stress.</p>
+</div>
+
+
+
+<style>
+  body {
+    background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
+    height: 200vh;
+    margin: 0; 
+  }
+  </style>
+
 </html>
