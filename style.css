@@ -4,7 +4,6 @@ body, html {
   font-family: Arial;
 }
 
-/* Style tab links */
 .tablink {
   background-color: #555;
   color: white;
@@ -22,7 +21,7 @@ body, html {
 }
 
 .tabcontent {
-  color: white;
+  color: rgb(255, 255, 255);
   display: none;
   padding: 100px 20px;
   height: 100%;
@@ -39,6 +38,7 @@ body, html {
 #Forum {background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
     height: 200vh;
     margin: 0;
+    
   }
 #Stress {background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
     height: 200vh;
@@ -48,5 +48,24 @@ body, html {
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  margin-top: 50px;
 }
+
+#Forum input, #Forum button {
+      margin: 5px 0;
+      padding: 8px;
+    }
+    #Forum .topic {
+      color: black;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px 0;
+      background: #f9f9f9;
+    }
+    #Forum .reply {
+      margin-left: 15px;
+      padding: 5px;
+      border-left: 3px solid #1D7DDE;
+      color: #333;
+      font-size: 0.9em;
+    }
