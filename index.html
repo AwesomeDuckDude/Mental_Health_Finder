@@ -3,6 +3,7 @@
   <link rel="stylesheet" href="style.css" /> 
   <script src="script.js"></script>
 
+
   <button class="tablink" onclick="openPage('Home', this, '#1D7DDE')" id="defaultOpen">Home</button>
   <button class="tablink" onclick="openPage('Chat', this, '#1D7DDE')">Ai Chat</button>
   <button class="tablink" onclick="openPage('Forum', this, '#1D7DDE')">Anonymous Forum</button>
@@ -22,21 +23,82 @@
 
 <div id="Chat" class="tabcontent">
   <h3>Ai Chat</h3>
-  <p>Freely talk to an ai</p>
 </div>
 
 
 
 <div id="Forum" class="tabcontent">
   <h3>Anonymous Forum</h3>
-  <p>Get in touch, you matter.</p>
+  <button onclick="resetForum()" style="background:red; color:white; margin:10px 0;">Reset Forum</button>
+
+
+  <input id="newTopic" placeholder="Start a new topic...">
+  <button onclick="addTopic()">Post Topic</button>
+
+  <h3>Topics</h3>
+  <div id="topics"></div>
+
+  <script>
+    let topics = JSON.parse(localStorage.getItem("topics")) || [];
+
+    function saveTopics() {
+      localStorage.setItem("topics", JSON.stringify(topics));
+    }
+
+    function addTopic() {
+      const title = document.getElementById("newTopic").value.trim();
+      if (!title) return;
+      topics.push({ id: Date.now(), title, replies: [] });
+      saveTopics();
+      document.getElementById("newTopic").value = "";
+      renderTopics();
+    }
+
+    function addReply(topicId) {
+      const replyInput = document.getElementById("reply-" + topicId);
+      const text = replyInput.value.trim();
+      if (!text) return;
+
+      const topic = topics.find(t => t.id === topicId);
+
+      const replyNumber = topic.replies.length + 1;
+      const replyText = `re:anon#${replyNumber} - ${text}`;
+
+      topic.replies.push({ text: replyText, createdAt: new Date().toLocaleString() });
+      saveTopics();
+      replyInput.value = "";
+      renderTopics();
+    }
+
+    function renderTopics() {
+      const container = document.getElementById("topics");
+      container.innerHTML = "";
+      topics.forEach(t => {
+        const div = document.createElement("div");
+        div.className = "topic";
+        div.innerHTML = `
+          <b>${t.title}</b>
+          <div>
+            <input id="reply-${t.id}" placeholder="Write a reply...">
+            <button onclick="addReply(${t.id})">Reply</button>
+          </div>
+          <div>
+            ${t.replies.map(r => `<div class="reply">${r.text} <small>(${r.createdAt})</small></div>`).join("")}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    renderTopics();
+  </script>
+
 </div>
 
 
 
 <div id="Stress" class="tabcontent">
   <h3>Stress Activities</h3>
-  <p>Find activities to help manage stress.</p>
 </div>
 
 
@@ -44,9 +106,12 @@
 <style>
   body {
     background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
-    height: 200vh;
+    height: 100vh;
     margin: 0; 
   }
   </style>
+  <body>
+    <br><br><br><br><h1 style="color: White;">Mental Health Matters - Click on Home to get Started</h1>
+  </body>
 
 </html>
