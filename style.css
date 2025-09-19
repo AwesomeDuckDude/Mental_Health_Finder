@@ -28,22 +28,21 @@ body, html {
 }
 
 #Home {background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
-    height: 200vh;
-    margin: 0; 
-  }
+  height: 200vh;
+  margin: 0; 
+}
 #Chat {background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
-    height: 200vh;
-    margin: 0;
-  }
+  height: 200vh;
+  margin: 0;
+}
 #Forum {background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
-    height: 200vh;
-    margin: 0;
-    
-  }
+  height: 200vh;
+  margin: 0; 
+}
 #Stress {background-image: linear-gradient(#1D7DDE, #114982, #0B2A4D);
-    height: 200vh;
-    margin: 0;
-  }
+  height: 200vh;
+  margin: 0;
+}
 
 body {
   font-family: Arial, sans-serif;
@@ -51,21 +50,31 @@ body {
 }
 
 #Forum input, #Forum button {
-      margin: 5px 0;
-      padding: 8px;
-    }
-    #Forum .topic {
-      color: black;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      margin: 10px 0;
-      background: #f9f9f9;
-    }
-    #Forum .reply {
-      margin-left: 15px;
-      padding: 5px;
-      border-left: 3px solid #1D7DDE;
-      color: #333;
-      font-size: 0.9em;
-    }
+  margin: 5px 0;
+  padding: 8px;
+}
+
+#Forum .topic {
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;         
+  margin: 10px 0;
+  background: #f9f9f9;
+ 
+}
+#Forum .reply {
+  margin-left: 15px;
+  margin-top: 5px;
+  padding: 5px;
+  border-left: 3px solid #1D7DDE;
+  color: #333;
+  font-size: 0.9em;
+}
+
+#Forum .topic,
+#Forum .reply {
+  word-wrap: break-word;
+  overflow-wrap: anywhere;   
+  white-space: pre-wrap;    
+}
