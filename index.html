@@ -12,12 +12,72 @@
 
 
 <div id="Home" class="tabcontent">
-  <body>
-  <body bgcolor="black">
-  <br><br><h1>Welcome to the Mental Health Finder</h1>
-  <button style="background-color:#1462B3; color:white;" onclick="sayHello()">Bana Ban</button>
-</body>
-</div>
+  <h1 style="color: white; text-align:center;">Welcome to the Mental Health Finder</h1>
+  <p style="color: #eee; text-align:center; max-width: 600px; margin: 0 auto;">
+    Your safe space to connect, share, and find support.  
+    Choose a section below to get started.
+  </p>
+
+  <div class="tip-box">
+    <h3>Current Tip</h3>
+    <p id="dailyTip"></p>
+    <script>
+      const tips = [
+        "Take a deep breath. Inhale for 4 seconds, hold for 4, exhale for 6.",
+        "Go for a short walk and notice the sounds around you.",
+        "Write down three things you're grateful for today.",
+        "Stretch your arms above your head and roll your shoulders back.",
+        "Drink a glass of water, hydration can improve mood and focus.",
+        "Send a kind message to someone you care about.",
+        "Spend 5 minutes sitting quietly, noticing your breath.",
+        "Listen to your favorite song and really focus on the music.",
+        "Write down one small goal and take the first step toward it.",
+        "Step outside and get a little sunlight if you can.",
+        "Declutter one small area of your room or desk.",
+        "Try a grounding exercise, Name 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste.",
+        "Practice saying something encouraging to yourself.",
+        "Turn off notifications for 30 minutes and enjoy the quiet.",
+        "Read a few pages of a book or article you enjoy.",
+        "Do 10 slow neck rolls to release tension.",
+        "Take 5 slow breaths and notice how your chest rises and falls.",
+        "Stand up and shake out your arms and legs for a minute.",
+        "Close your eyes and picture a peaceful place.",
+        "Smile! even a small smile can improve your mood.",
+        "Try writing your thoughts in a journal for 5 minutes.",
+        "Spend a moment appreciating something simple, like the sky or your coffee.",
+        "Limit screen time before bed to help with better sleep.",
+        "If you feel overwhelmed, break tasks into tiny steps.",
+        "Celebrate a small win from today, even if it’s just getting up.",
+        "Put on a calming playlist or nature sounds.",
+        "Practice progressive relaxation, tense and relax each muscle group.",
+        "Do one act of kindness, big or small.",
+        "Remind yourself, It’s okay to rest. ",
+        "Think of one thing you’re looking forward to, no matter how small."
+      ];
+      document.getElementById("dailyTip").innerText = tips[Math.floor(Math.random() * tips.length)];
+    </script>
+  </div>
+
+  <div class="about-box">
+    <h3>About This Website</h3>
+    <p>
+      Mental Health Finder is designed to give you a supportive space where you can 
+      share experiences, connect anonymously, and practice self care.  
+      <br><br>
+      It is <b>not a replacement for professional help</b>. If you ever feel like 
+      you may harm yourself or are in crisis, please reach out to local or national emergency 
+      services or a trusted professional immediately.
+    </p>
+  </div>
+
+  <div class="resources-box">
+    <br><br>
+    <h3>Mental Health Profesional Resources</h3>
+    <ul>
+      
+  </div>
+
+</div>  
 
 
 
