@@ -4,6 +4,7 @@
   <script src="script.js"></script>
 
 
+
   <button class="tablink" onclick="openPage('Home', this, '#1D7DDE')" id="defaultOpen">Home</button>
   <button class="tablink" onclick="openPage('Chat', this, '#1D7DDE')">Ai Chat</button>
   <button class="tablink" onclick="openPage('Forum', this, '#1D7DDE')">Anonymous Forum</button>
@@ -87,9 +88,57 @@
 
 
 <div id="Chat" class="tabcontent">
-  <h3>Ai Chat</h3>
-</div>
 
+<body>
+  <h1>Ask me a question</h1>
+  <input type="text" id="user-input">
+  <button id="fetch-data">Submit</button>
+  <pre id="result"></pre>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module">
+
+    async function fetchCompletion(userMessage) {
+      const apiKey = "open api key"; 
+      const url = 'https://api.openai.com/v1/chat/completions';
+      const headers = {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      };
+      const data = {
+        model: "gpt-4o",
+        messages: [
+          { role: 'system', content: 'You talking to someone who is seeking mental health support.' },
+          { role: 'user', content: userMessage }
+        ]
+      };
+
+      try {
+        const response = await axios.post(url, data, { headers });
+        console.log(response.data)
+        const result = response.data.choices[0].message.content;
+        resultElement.textContent = result;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        resultElement.textContent = "Error fetching data. Check console for details.";
+      }
+    }
+
+    const userInputElement = document.getElementById('user-input');
+    const fetchDataButton = document.getElementById('fetch-data');
+    const resultElement = document.getElementById('result');
+
+    fetchDataButton.addEventListener('click', () => {
+      const userInput = userInputElement.value;
+      fetchCompletion(userInput);
+    });
+
+    
+  </script>
+</body>
+</html>
+</div>
 
 
 <div id="Forum" class="tabcontent">
@@ -104,59 +153,90 @@
   <div id="topics"></div>
 
   <script>
-    let topics = JSON.parse(localStorage.getItem("topics")) || [];
 
-    function saveTopics() {
-      localStorage.setItem("topics", JSON.stringify(topics));
-    }
+  let topics = JSON.parse(localStorage.getItem("topics")) || [];
+  const DELETE_PASSWORD = "589"; 
 
-    function addTopic() {
-      const title = document.getElementById("newTopic").value.trim();
-      if (!title) return;
-      topics.push({ id: Date.now(), title, replies: [] });
-      saveTopics();
-      document.getElementById("newTopic").value = "";
-      renderTopics();
-    }
+  function saveTopics() {
+    localStorage.setItem("topics", JSON.stringify(topics));
+  }
 
-    function addReply(topicId) {
-      const replyInput = document.getElementById("reply-" + topicId);
-      const text = replyInput.value.trim();
-      if (!text) return;
-
-      const topic = topics.find(t => t.id === topicId);
-
-      const replyNumber = topic.replies.length + 1;
-      const replyText = `re:anon#${replyNumber} - ${text}`;
-
-      topic.replies.push({ text: replyText, createdAt: new Date().toLocaleString() });
-      saveTopics();
-      replyInput.value = "";
-      renderTopics();
-    }
-
-    function renderTopics() {
-      const container = document.getElementById("topics");
-      container.innerHTML = "";
-      topics.forEach(t => {
-        const div = document.createElement("div");
-        div.className = "topic";
-        div.innerHTML = `
-          <b>${t.title}</b>
-          <div>
-            <input id="reply-${t.id}" placeholder="Write a reply...">
-            <button onclick="addReply(${t.id})">Reply</button>
-          </div>
-          <div>
-            ${t.replies.map(r => `<div class="reply">${r.text} <small>(${r.createdAt})</small></div>`).join("")}
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
-
+  function addTopic() {
+    const title = document.getElementById("newTopic").value.trim();
+    if (!title) return;
+    topics.push({ id: Date.now(), title, replies: [] });
+    saveTopics();
+    document.getElementById("newTopic").value = "";
     renderTopics();
-  </script>
+  }
+
+  function addReply(topicId) {
+    const replyInput = document.getElementById("reply-" + topicId);
+    const text = replyInput.value.trim();
+    if (!text) return;
+
+    const topic = topics.find(t => t.id === topicId);
+    const replyNumber = topic.replies.length + 1;
+    const replyText = `re:anon#${replyNumber} - ${text}`;
+
+    topic.replies.push({ text: replyText, createdAt: new Date().toLocaleString() });
+    saveTopics();
+    replyInput.value = "";
+    renderTopics();
+  }
+
+  function deleteTopic(topicId) {
+    const input = prompt("Enter the forum admin password to delete this post:");
+    if (input === null) return;
+    if (input !== DELETE_PASSWORD) {
+      alert("Incorrect password. Post not deleted.");
+      return;
+    }
+
+    topics = topics.filter(t => t.id !== topicId);
+    saveTopics();
+    renderTopics();
+  }
+
+  function resetForum() {
+    const input = prompt("Enter the forum admin password to reset ALL topics:");
+    if (input === null) return;
+    if (input !== DELETE_PASSWORD) {
+      alert("Incorrect password. Forum not reset.");
+      return;
+    }
+
+    if (confirm("Are you sure you want to reset the forum? This will delete all topics and replies.")) {
+      localStorage.removeItem("topics");
+      topics = [];
+      renderTopics();
+    }
+  }
+
+  function renderTopics() {
+    const container = document.getElementById("topics");
+    container.innerHTML = "";
+    topics.forEach(t => {
+      const div = document.createElement("div");
+      div.className = "topic";
+      div.innerHTML = `
+        <b>${t.title}</b>
+        <button class="deleteBtn" onclick="deleteTopic(${t.id})"> Delete</button>
+        <div>
+          <input id="reply-${t.id}" placeholder="Write a reply...">
+          <button onclick="addReply(${t.id})">Reply</button>
+        </div>
+        <div>
+          ${t.replies.map(r => `<div class="reply">${r.text} <small>(${r.createdAt})</small></div>`).join("")}
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  renderTopics();
+</script>
+
 
 </div>
 
@@ -164,27 +244,8 @@
 <div id="Stress" class="tabcontent">
   <h3>Stress Activities</h3>
   <p style="color:white;">Pop the bubbles to relax</p>
-  <div id="bubbleStats">
-  <span id="timer">Time: 0.00s</span> | 
-  <span id="bestTime">Best: --</span>
-  </div>
   <div id="bubbleGame"></div>
   <button onclick="startBubbles()" style="margin-top:10px;">Start Again</button>
 
 </div>
 
-
-
-
-<style>
-  body {
-    background-image: linear-gradient( #114982);
-    height: 100vh;
-    margin: 0; 
-  }
-  </style>
-  <body>
-    <br><br><br><br><h1 style="color: White;">Mental Health Matters - Click on Home to get Started</h1>
-  </body>
-
-</html>
