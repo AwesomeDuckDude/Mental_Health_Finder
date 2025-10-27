@@ -1,4 +1,4 @@
-//Tabs code
+// Tabs code
 function openPage(pageName, elmnt, color) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -10,9 +10,15 @@ function openPage(pageName, elmnt, color) {
     tablinks[i].style.backgroundColor = "";
   }
   document.getElementById(pageName).style.display = "block";
-  elmnt.style.backgroundColor = color;
+  if(elmnt) elmnt.style.backgroundColor = color;
 }
-document.getElementById("defaultOpen").click();
+
+// Wait for the DOM to load before clicking the default tab
+document.addEventListener("DOMContentLoaded", () => {
+  const defaultBtn = document.getElementById("defaultOpen");
+  if (defaultBtn) defaultBtn.click();
+});
+
 
 
 //Forum Code
@@ -51,6 +57,8 @@ function popBubble(e) {
   bubble.classList.add("popped");
   setTimeout(() => bubble.remove(), 200); 
 }
-document.addEventListener("DOMContentLoaded", () => {
-  startBubbles();
-});
+
+
+
+
+
