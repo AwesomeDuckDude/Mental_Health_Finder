@@ -88,7 +88,6 @@
 
 
 <div id="Chat" class="tabcontent">
-
 <body>
   <h1>Ask me a question</h1>
   <input type="text" id="user-input">
@@ -100,7 +99,7 @@
   <script type="module">
 
     async function fetchCompletion(userMessage) {
-      const apiKey = "open api key"; 
+      const apiKey = process.env.OPENAI_API_KEY;
       const url = 'https://api.openai.com/v1/chat/completions';
       const headers = {
         'Authorization': `Bearer ${apiKey}`,
@@ -248,4 +247,5 @@
   <button onclick="startBubbles()" style="margin-top:10px;">Start Again</button>
 
 </div>
+
 
